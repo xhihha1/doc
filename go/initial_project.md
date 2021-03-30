@@ -111,7 +111,7 @@
     require rsc.io/quote v1.5.2
 
 
-### 使用 vendor 目錄  
+### 使用 vendor 目錄進行套件管理  
 
     go mod vendor  
 
