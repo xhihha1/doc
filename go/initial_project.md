@@ -116,3 +116,46 @@
     go mod vendor  
 
 使用 vendor時，會下載檔案到 `pkg`，並且將套件複製一份到 `vendor` 目錄下  
+
+
+# VScode 
+
+切換到 `debug` 功能，選擇create，會在 `.vscode` 目錄下自動建立 `launch.json`  
+可依照需求修改對應在不同系統環境下的環境變量   
+
+    {
+        // Use IntelliSense to learn about possible attributes.
+        // Hover to view descriptions of existing attributes.
+        // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Launch Package",
+                "type": "go",
+                "request": "launch",
+                "mode": "debug",
+                "program": "${workspaceFolder}",
+                "windows": {
+                    "env": {
+                        "GOPATH": "C:/Users/${env:USERNAME}/go;${workspaceFolder}/../..",
+                    }
+                },
+                "osx": {
+                    "env": {
+                        "GOPATH": "${env:HOME}/go:${workspaceFolder}/../..",
+                        "PORT": 5000, // 🐘 Setting the port for AIAA
+                    },
+                },
+                "linux": {
+                    "env": {
+                        "GOPATH": "${env:HOME}/go:${workspaceFolder}/../..",
+                        "PORT": 5000, // 🐘 Setting the port for AIAA
+                    },
+                },
+                "args": [],
+                // "args": ["help"],
+                // "args": ["version"],
+                "showLog": true
+            }
+        ]
+    }
