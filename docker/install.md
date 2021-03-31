@@ -9,6 +9,27 @@ https://docs.microsoft.com/zh-tw/windows/wsl/tutorials/wsl-containers
 https://stackoverflow.com/questions/43041331/docker-forever-in-docker-is-starting-at-windows-task
 
 
+# 錯誤處理  
+
+**Q:**
+
+執行 docker search、 docker run 出現**i/o timeout**  
+
+	Error response from daemon: i/o timeout 
+
+遇到這個狀況可能是 `docker subnet` 造成的問題  
+
+**Ans.**
+
+進入 docker desktop > setting > Resources > NETWORK  
+
+修改 **docker subnet**，例：
+
+	192.168.66.0/28
+
+
+
+
 
 # Docker Desktop Getting Start
 
