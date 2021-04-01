@@ -1,3 +1,13 @@
+# 安裝 WSL 功能
+
+介紹好用工具：WSL (Windows Subsystem for Linux)
+
+https://blog.miniasp.com/post/2019/02/01/Useful-tool-WSL-Windows-Subsystem-for-Linux
+
+手把手教你启用Win10的Linux子系统
+
+https://blog.csdn.net/zhangdongren/article/details/82663977
+
 # window 安裝 docker，從 WSL 2安裝開始
 
 安裝 WSL 並更新至 WSL 2
