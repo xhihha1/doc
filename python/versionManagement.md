@@ -1,4 +1,7 @@
 
+
+https://www.jianshu.com/p/f482a9fcae0e
+
 windows pyenv  
 https://pypi.org/project/pyenv-win/
 
