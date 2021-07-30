@@ -26,3 +26,25 @@
 ## 如何分辨硬碟的分割表是MBR還是GPT  
 
 [https://blog.xuite.net/yh96301/blog/585117486](https://blog.xuite.net/yh96301/blog/585117486)  
+
+
+## cmd 大量自動修改檔名
+
+[參考網址](https://officeguide.cc/batch-rename-multiple-files-tutorial-examples/)
+
+保留前三個字母  
+若要將所有的 JPG 圖檔（`*.jpg`）保留原檔案名稱的前三個字母`???`，然後再加上 `-new-name.jpg` 做為新的檔案名稱，可以執行：  
+
+    ren *.jpg ???-new-name.jpg
+
+更改副檔名  
+
+    ren *.jpg *.jpeg
+
+縮短檔案名稱  
+
+    ren *.* ?????.*
+
+保留連字線之前的名稱
+
+    ren *-*.jpg *-orig.jpg
