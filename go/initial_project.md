@@ -31,6 +31,19 @@
 
     go 1.15
 
+
+    Usage:
+    go mod <command> [arguments]
+    The commands are:
+    download    // 將依賴全部下載到本機中，位置為 $GOPATH/pkg/mod/cache
+    edit        // 編輯 go.mod 例如鎖定某個依賴的版本
+    graph       // 列出專案中哪一個部分使用了某個依賴
+    init        // 建立 go.mod
+    tidy        // 增加遺失的依賴，移除未使用的依賴
+    vendor      // 將既有的 go.mod 依賴全部存在 /vendor 底下
+    verify      // 驗證本地依賴依然符合 go.sum 
+    why         // 解釋某個依賴為何存在在 go.mod 中，誰使用了它
+
 ### 設定 GOPATH 在 src 的上一層目錄：
 
  - windows
