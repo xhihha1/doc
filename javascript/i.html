@@ -1,0 +1,74 @@
+<html>
+<body>
+<button id="btn">Save</button>
+<a href="i.jpg" download="a.jpg">123</a>
+<input type="file" name="inputfile" id="inputfile">
+<div id="output"></div>
+</body>
+<script>
+document.getElementById('btn').onclick = function(){
+	// download("hello.txt","This is the content of my file :)");
+	toDataURL("i.jpg", function(v){ console.log(v); downloadImage('a.jpg', v) })
+}
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+function downloadImage(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:image/jpeg;base64,' + encodeURIComponent(text));
+  element.setAttribute('href', text);
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+function toDataURL(src, callback, outputFormat) {
+  let image = new Image();
+  image.crossOrigin = 'Anonymous';
+  image.onload = function () {
+    let canvas = document.createElement('canvas');
+    let ctx = canvas.getContext('2d');
+    let dataURL;
+    canvas.height = this.naturalHeight;
+    canvas.width = this.naturalWidth;
+    ctx.drawImage(this, 0, 0);
+    // dataURL = canvas.toDataURL(outputFormat);
+	dataURL = canvas.toDataURL();
+    callback(dataURL);
+  };
+  image.src = src;
+  if (image.complete || image.complete === undefined) {
+    image.src = "data:image/gif;base64, R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    image.src = src;
+  }
+}
+
+document.getElementById('inputfile')
+				.addEventListener('change', function() {
+				  
+				var fr=new FileReader();
+				fr.onload=function(){
+					document.getElementById('output')
+							.textContent=fr.result;
+				}
+				  
+				fr.readAsText(this.files[0]);
+			})
+
+// data:image/jpeg;base64,
+// download("hello.txt","This is the content of my file :)");
+</script>
+</html>
