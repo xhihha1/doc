@@ -63,3 +63,7 @@ https://www.geeksforgeeks.org/how-to-read-a-local-text-file-using-javascript/
 	</body>
 	  
 	</html>
+	
+# drop file
+
+https://web.dev/read-files/#select-dnd
