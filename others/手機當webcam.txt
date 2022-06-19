@@ -1,0 +1,23 @@
+2.  usb傳輸線
+ 
+step 1▸手機下載DroidCam Wireless Webcam並安裝
+
+step 2▸將手機調成偵錯模式(點擊進入教學)
+
+step 3▸電腦下載app客戶端DroidCam.Client.6.0.1.FullOffline.exe並安裝
+
+step 4▸電腦下載驅動程式UniversalAdbDriverSetup.msi並安裝
+
+step 5▸電腦重新開機。開機後點開始，如圖按下Start ADB server
+
+step 6▸用usb傳輸線連結手機與電腦，手機選擇 PTP模式(除了充電和當作儲存裝置，剩下那個)注意手機，如詢問是否同意偵錯模式，要開啟。
+
+step 7▸開啟電腦客戶端DroidCam.Client軟體，選擇usb圖示，按下start
+
+
+在line, zoom中使用obs影像
+下載 OBS Virtualcam 
+安裝完後可在obs"工具"中找到虛擬攝影機
+啟用虛擬攝影機
+
+在 line中訊號來源選擇 obs-webcam
