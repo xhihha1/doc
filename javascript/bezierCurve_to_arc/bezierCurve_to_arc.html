@@ -80,24 +80,106 @@ ctx.stroke();
 
 var nCenter = [250, 250]
 var nR = 50
-var p = bezierArc(nR, Math.PI * 0.98)
+var ang = 0
+function redrawArc(nCenter, p){
+    ctx.strokeStyle = '#FFFF00'
+    ctx.beginPath();
+    ctx.moveTo(shiftCenter(nCenter, p[0])[0], shiftCenter(nCenter, p[0])[1]);
+    ctx.bezierCurveTo(
+        shiftCenter(nCenter, p[1])[0], shiftCenter(nCenter, p[1])[1],
+        shiftCenter(nCenter, p[2])[0], shiftCenter(nCenter, p[2])[1],
+        shiftCenter(nCenter, p[3])[0], shiftCenter(nCenter, p[3])[1]
+    )
+    ctx.stroke();
+}
+function redraw(){
 
-ctx.strokeStyle = '#FF0000';
-ctx.beginPath();
-ctx.arc(nCenter[0], nCenter[1], nR, 0, 2 * Math.PI);
-ctx.stroke();
+    // ang += 2 * Math.PI / 360
+    // ang = ang > 2 * Math.PI ? 0 : ang
 
-console.log('p: ', p)
+    ang = Math.PI + Math.PI/90;
 
-ctx.strokeStyle = '#FFFF00'
-ctx.beginPath();
-ctx.moveTo(shiftCenter(nCenter, p[0])[0], shiftCenter(nCenter, p[0])[1]);
-ctx.bezierCurveTo(
-    shiftCenter(nCenter, p[1])[0], shiftCenter(nCenter, p[1])[1],
-    shiftCenter(nCenter, p[2])[0], shiftCenter(nCenter, p[2])[1],
-    shiftCenter(nCenter, p[3])[0], shiftCenter(nCenter, p[3])[1]
-)
-ctx.stroke();
+    ctx.clearRect(150, 150, 200, 200);
+    ctx.strokeStyle = '#FF0000';
+    ctx.beginPath();
+    ctx.arc(nCenter[0], nCenter[1], nR, 0, 2 * Math.PI);
+    ctx.stroke();
+    if (ang <= Math.PI) {
+        var p = bezierArc(nR, ang)
+        console.log('p: ', p)
+        p[0] = rotate_point([0,0], ang / 2, p[0])
+        p[1] = rotate_point([0,0], ang / 2, p[1])
+        p[2] = rotate_point([0,0], ang / 2, p[2])
+        p[3] = rotate_point([0,0], ang / 2, p[3])
+
+        redrawArc(nCenter, p)
+        // ctx.strokeStyle = '#FFFF00'
+        // ctx.beginPath();
+        // ctx.moveTo(shiftCenter(nCenter, p[0])[0], shiftCenter(nCenter, p[0])[1]);
+        // ctx.bezierCurveTo(
+        //     shiftCenter(nCenter, p[1])[0], shiftCenter(nCenter, p[1])[1],
+        //     shiftCenter(nCenter, p[2])[0], shiftCenter(nCenter, p[2])[1],
+        //     shiftCenter(nCenter, p[3])[0], shiftCenter(nCenter, p[3])[1]
+        // )
+        // ctx.stroke();
+    } else {
+        let stepAng = Math.PI
+        var p = bezierArc(nR, stepAng)
+        console.log('0:', JSON.stringify(p))
+        p[0] = rotate_point([0,0], stepAng / 2, p[0])
+        p[1] = rotate_point([0,0], stepAng / 2, p[1])
+        p[2] = rotate_point([0,0], stepAng / 2, p[2])
+        p[3] = rotate_point([0,0], stepAng / 2, p[3])
+        console.log('1:', JSON.stringify(p))
+        redrawArc(nCenter, p)
+        // ctx.strokeStyle = '#FFFF00'
+        // ctx.beginPath();
+        // ctx.moveTo(shiftCenter(nCenter, p[0])[0], shiftCenter(nCenter, p[0])[1]);
+        // ctx.bezierCurveTo(
+        //     shiftCenter(nCenter, p[1])[0], shiftCenter(nCenter, p[1])[1],
+        //     shiftCenter(nCenter, p[2])[0], shiftCenter(nCenter, p[2])[1],
+        //     shiftCenter(nCenter, p[3])[0], shiftCenter(nCenter, p[3])[1]
+        // )
+        // ctx.stroke();
+        stepAng = ang - Math.PI
+        p = bezierArc(nR, stepAng)
+        console.log('2:', JSON.stringify(p))
+        p[0] = rotate_point([0,0], stepAng / 2 + Math.PI, p[0])
+        p[1] = rotate_point([0,0], stepAng / 2 + Math.PI, p[1])
+        p[2] = rotate_point([0,0], stepAng / 2 + Math.PI, p[2])
+        p[3] = rotate_point([0,0], stepAng / 2 + Math.PI, p[3])
+        console.log('3:', JSON.stringify(p))
+        redrawArc(nCenter, p)
+        // ctx.strokeStyle = '#FFFF00'
+        // ctx.beginPath();
+        // ctx.moveTo(shiftCenter(nCenter, p[0])[0], shiftCenter(nCenter, p[0])[1]);
+        // ctx.bezierCurveTo(
+        //     shiftCenter(nCenter, p[1])[0], shiftCenter(nCenter, p[1])[1],
+        //     shiftCenter(nCenter, p[2])[0], shiftCenter(nCenter, p[2])[1],
+        //     shiftCenter(nCenter, p[3])[0], shiftCenter(nCenter, p[3])[1]
+        // )
+        // ctx.stroke();
+    }
+    
+    // setTimeout(redraw, 1000)
+    // window.requestAnimationFrame(redraw);
+}
+redraw()
+// window.requestAnimationFrame(redraw);
+
+
+var circlePoints = function (radius, angle, segment) {
+    const r = radius;
+    const theta = angle / segment;
+    const phi = 0;
+    const points = [];
+    for(var i = 0; i < segment; i++) {
+        points.push({ x: r * Math.cos(phi), y: r * Math.sin(phi) });
+        phi += theta;
+    }
+    return points;
+}
+
 </script> 
 
 </body>

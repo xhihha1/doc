@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>MediaStreamTrackProcessor</title>
+  <style>
+    video,
+    canvas {
+      max-width: 100%
+    }
+  </style>
+</head>
+
+<body>
+
+  <body>
+    <button>start</button>
+    <canvas width="640" height="360"></canvas>
+    <img src="" alt="Italian Trulli">
+  </body>
+
+  <script>
+    //  const button = document.querySelector("button");
+    //  button.onclick = async (evt) => {
+    //   startDrawing()
+    // }
+    const canvas = document.querySelector('canvas'),
+      ctx = canvas.getContext("2d"),
+      image = document.querySelector('img');
+
+    // Wait for the sprite sheet to load
+    image.onload = () => {
+      canvas.width = image.width;
+      canvas.height = image.height;
+      Promise.all([
+        // Cut out two sprites from the sprite sheet
+        createImageBitmap(image, 0, 0, 150, 150),
+        createImageBitmap(image, 150, 0, 150, 150),
+        createImageBitmap(image, 300, 0, 150, 150),
+        createImageBitmap(image, 0, 150, 150, 150),
+        createImageBitmap(image, 150, 150, 150, 150),
+        createImageBitmap(image, 300, 150, 150, 150),
+        createImageBitmap(image, 450, 150, 150, 150),
+      ]).then((sprites) => {
+        // Draw each sprite onto the canvas
+
+        ctx.drawImage(sprites[0], 0, 0);
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data; // 获取原始图像每一个像素
+        for(var i = 0; i < data.length; i+=4) {
+          var grey = (data[i] + data[i+1] + data[i+2]) / 3;
+          data[i] = data[i+1] = data[i+2] = grey;
+        }
+        ctx.putImageData(imageData, 0, 0);
+        
+        ctx.drawImage(sprites[1], 150, 0);
+        imageData = ctx.getImageData(150, 0, 150, 150);
+        data = imageData.data;
+        for(var i = 0; i < data.length; i += 4) {
+          var avg = (data[i] + data[i+1] + data[i+2]) / 3;
+          data[i] = data[i+1] = data[i+2] = avg >= 100 ? 255 : 0;
+        }
+        ctx.putImageData(imageData, 150, 0);
+
+        ctx.drawImage(sprites[2], 300, 0);
+        imageData = ctx.getImageData(300, 0, 150, 150);
+        data = imageData.data;
+        for(var i = 0; i < data.length; i+= 4) {
+              data[i] = 255 - data[i];
+              data[i + 1] = 255 - data[i + 1];
+              data[i + 2] = 255 - data[i + 2];
+        }
+        ctx.putImageData(imageData, 300, 0);
+
+        ctx.drawImage(sprites[3], 0, 150);
+        imageData = ctx.getImageData(0, 150, 150, 150);
+        data = imageData.data;
+        for(var i = 0; i < data.length; i++) {
+          var avg = Math.floor((Math.min(data[i], data[i+1], data[i+2]) + Math.max(data[i], data[i+1], data[i+2])) / 2 );
+          data[i] = data[i+1] = data[i+2] = avg;
+        }
+        ctx.putImageData(imageData, 0, 150);
+
+        ctx.drawImage(sprites[4], 150, 150);
+        imageData = ctx.getImageData(150, 150, 150, 150);
+        data = imageData.data;
+        for(var i = 0; i < canvas.height * canvas.width; i++) {
+            data[i*4 + 2] = 0;
+            data[i*4 + 1] = 0;
+        }
+        ctx.putImageData(imageData, 150, 150);
+
+        ctx.drawImage(sprites[5], 300, 150);
+        imageData = ctx.getImageData(300, 150, 150, 150);
+        data = imageData.data;
+        for(var i = 0; i < canvas.height * canvas.width; i++) {
+            data[i*4 + 0] = 0;
+            data[i*4 + 1] = 0;
+        }
+        ctx.putImageData(imageData, 300, 150);
+
+        ctx.drawImage(sprites[6], 450, 150);
+        imageData = ctx.getImageData(450, 150, 150, 150);
+        data = imageData.data;
+        for(var i = 0; i < canvas.height * canvas.width; i++) {
+            data[i*4 + 0] = 0;
+            data[i*4 + 2] = 0;
+        }
+        ctx.putImageData(imageData, 450, 150);
+
+      });
+    };
+
+    // Load the sprite sheet from an image file
+    image.src = "2.jpg";
+  </script>
+</body>
+
+</html>

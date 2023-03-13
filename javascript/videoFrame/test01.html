@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>MediaStreamTrackProcessor</title>
+  <style>
+    video,
+    canvas {
+      max-width: 100%
+    }
+  </style>
+</head>
+
+<body>
+  <body>
+    <button>start</button>
+    <video controls></video>
+    <canvas width="640" height="360"></canvas>
+    <span id="fps_text"/>
+  </body>
+  
+  <script>
+     const button = document.querySelector("button");
+     button.onclick = async (evt) => {
+      startDrawing()
+    }
+    function startDrawing() {
+      var video = document.querySelector('video');
+      var canvas = document.querySelector('canvas');
+      var ctx = canvas.getContext('2d');
+  
+      var paint_count = 0;
+      var start_time = 0.0;
+  
+      var updateCanvas = function(now) {
+        if(start_time == 0.0)
+          start_time = now;
+  
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  
+        var elapsed = (now - start_time) / 1000.0;
+        var fps = (++paint_count / elapsed).toFixed(3);
+        document.querySelector('#fps_text').innerText = 'video fps: ' + fps;
+  
+        video.requestVideoFrameCallback(updateCanvas);
+      }
+  
+      video.requestVideoFrameCallback(updateCanvas);
+  
+      video.src = "test.webm"
+      video.play()
+    }
+  </script>
+</body>
+
+</html>
