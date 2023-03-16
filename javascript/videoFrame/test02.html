@@ -37,16 +37,25 @@
         createImageBitmap(image, 0, 0, 150, 150),
         createImageBitmap(image, 150, 0, 150, 150),
         createImageBitmap(image, 300, 0, 150, 150),
+        createImageBitmap(image, 450, 0, 150, 150),
         createImageBitmap(image, 0, 150, 150, 150),
         createImageBitmap(image, 150, 150, 150, 150),
         createImageBitmap(image, 300, 150, 150, 150),
         createImageBitmap(image, 450, 150, 150, 150),
+        createImageBitmap(image, 0, 300, 150, 150),
+        createImageBitmap(image, 150, 300, 150, 150),
+        createImageBitmap(image, 300, 300, 150, 150),
+        createImageBitmap(image, 450, 300, 150, 150),
       ]).then((sprites) => {
         // Draw each sprite onto the canvas
 
         ctx.drawImage(sprites[0], 0, 0);
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let data = imageData.data; // 获取原始图像每一个像素
+        // 灰度滤镜
+        // 1、取三种颜色的平均值
+        // 2、取三种颜色的最大值（最小值）
+        // 3、加权平均值：0.3R + 0.59G + 0.11*B 。
         for(var i = 0; i < data.length; i+=4) {
           var grey = (data[i] + data[i+1] + data[i+2]) / 3;
           data[i] = data[i+1] = data[i+2] = grey;
@@ -56,6 +65,8 @@
         ctx.drawImage(sprites[1], 150, 0);
         imageData = ctx.getImageData(150, 0, 150, 150);
         data = imageData.data;
+        // 黑白滤镜
+        // 计算rgb的平均值arg，arg>=100，r=g=b=255，否则均为0
         for(var i = 0; i < data.length; i += 4) {
           var avg = (data[i] + data[i+1] + data[i+2]) / 3;
           data[i] = data[i+1] = data[i+2] = avg >= 100 ? 255 : 0;
@@ -65,6 +76,7 @@
         ctx.drawImage(sprites[2], 300, 0);
         imageData = ctx.getImageData(300, 0, 150, 150);
         data = imageData.data;
+        // 反向滤镜
         for(var i = 0; i < data.length; i+= 4) {
               data[i] = 255 - data[i];
               data[i + 1] = 255 - data[i + 1];
@@ -72,25 +84,49 @@
         }
         ctx.putImageData(imageData, 300, 0);
 
-        ctx.drawImage(sprites[3], 0, 150);
+        
+
+        ctx.drawImage(sprites[3], 450, 0);
+        imageData = ctx.getImageData(450, 0, 150, 150);
+        data = imageData.data;
+        // 褐色滤镜
+        for(var i = 0; i < data.length; i+= 4) {
+          var r = data[i],
+          g = data[i + 1],
+          b = data[i + 2];
+
+          var newR = r * 0.393 + g * 0.769 + b * 0.189;
+          var newG = r * 0.349 + g * 0.686 + b * 0.168;
+          var newB =  r * 0.272 + g * 0.534 + b * 0.131;
+          data[i] = newR;
+          data[i + 1] = newG;
+          data[i + 2] = newB;
+
+        }
+        ctx.putImageData(imageData, 450, 0);
+
+        ctx.drawImage(sprites[4], 0, 150);
         imageData = ctx.getImageData(0, 150, 150, 150);
         data = imageData.data;
+        // 去色滤镜
+        // rgb三种颜色取三种颜色的極值的平均值。
         for(var i = 0; i < data.length; i++) {
           var avg = Math.floor((Math.min(data[i], data[i+1], data[i+2]) + Math.max(data[i], data[i+1], data[i+2])) / 2 );
           data[i] = data[i+1] = data[i+2] = avg;
         }
         ctx.putImageData(imageData, 0, 150);
 
-        ctx.drawImage(sprites[4], 150, 150);
+        ctx.drawImage(sprites[5], 150, 150);
         imageData = ctx.getImageData(150, 150, 150, 150);
         data = imageData.data;
+        // 单色滤镜
         for(var i = 0; i < canvas.height * canvas.width; i++) {
             data[i*4 + 2] = 0;
             data[i*4 + 1] = 0;
         }
         ctx.putImageData(imageData, 150, 150);
 
-        ctx.drawImage(sprites[5], 300, 150);
+        ctx.drawImage(sprites[6], 300, 150);
         imageData = ctx.getImageData(300, 150, 150, 150);
         data = imageData.data;
         for(var i = 0; i < canvas.height * canvas.width; i++) {
@@ -99,7 +135,7 @@
         }
         ctx.putImageData(imageData, 300, 150);
 
-        ctx.drawImage(sprites[6], 450, 150);
+        ctx.drawImage(sprites[7], 450, 150);
         imageData = ctx.getImageData(450, 150, 150, 150);
         data = imageData.data;
         for(var i = 0; i < canvas.height * canvas.width; i++) {
@@ -107,6 +143,24 @@
             data[i*4 + 2] = 0;
         }
         ctx.putImageData(imageData, 450, 150);
+
+        ctx.drawImage(sprites[8], 0, 300);
+        imageData = ctx.getImageData(0, 300, 150, 150);
+        data = imageData.data;
+        // 连环画滤镜
+        for(var i = 0; i < data.length; i+= 4) {
+          var r = data[i],
+              g = data[i+1],
+              b = data[i+2];
+
+          var newR = Math.abs(g - b + g + r) * r / 256;
+          var newG = Math.abs(b -g + b + r) * r / 256;
+          var newB =  Math.abs(b -g + b + r) * g / 256;
+          data[i] = newR;
+          data[i + 1] = newG;
+          data[i + 2] = newB;
+        }
+        ctx.putImageData(imageData, 0, 300);
 
       });
     };
