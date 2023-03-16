@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="sw" content="enabled">
+</head>
+
+<body>
+  <div id="msg"></div>
+  <button id="redirect">redirect</button>
+  <button id="getJS">getJS</button>
+  <script>
+    // 注冊Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(function (registration) {
+          console.log('Service Worker 注冊成功：', registration.scope);
+          document.getElementById('msg').innerHTML = 'Success'
+          document.getElementById('msg').style.color = 'Green'
+        })
+        .catch(function (error) {
+          console.log('Service Worker 注冊失敗：', error);
+          document.getElementById('msg').innerHTML = 'Fail'
+          document.getElementById('msg').style.color = 'Red'
+        });
+    }
+    document.getElementById('redirect').onclick = function () {
+      // window.location.href = 'home.html'
+      // 發送對home.html頁面的請求
+      fetch('home.html')
+        .then(function (response) {
+          console.log('Response received', response);
+        })
+        .catch(function (error) {
+          console.error('Error:', error);
+        });
+    }
+    document.getElementById('getJS').onclick = function () {
+      // window.location.href = 'home.html'
+      // 發送對home.html頁面的請求
+      fetch('main.js')
+        .then(function (response) {
+          console.log('Response received', response);
+        })
+        .catch(function (error) {
+          console.error('Error:', error);
+        });
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="s.css">
+</body>
+
+</html>

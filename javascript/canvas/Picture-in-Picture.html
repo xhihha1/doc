@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Picture-in-Picture API Example</title>
+  <style>
+    :picture-in-picture {
+      box-shadow: 0 0 0 5px red;
+    }
+  </style>
+</head>
+<body>
+  <video id="myVideo" width="640" height="360" controls>
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+  </video>
+  <button id="pipButton">開啟 Picture-in-Picture</button>
+  <script>
+    const video = document.getElementById('myVideo');
+    const pipButton = document.getElementById('pipButton');
+
+    // 檢查瀏覽器是否支持 Picture-in-Picture API
+    if ('pictureInPictureEnabled' in document) {
+      pipButton.addEventListener('click', function() {
+        // 判斷當前視頻是否處於 Picture-in-Picture 模式中
+        if (document.pictureInPictureElement === video) {
+          // 如果是，則退出 Picture-in-Picture 模式
+          document.exitPictureInPicture()
+            .catch(function(error) {
+              console.error('Failed to exit Picture-in-Picture mode:', error);
+            });
+        } else {
+          // 如果不是，則進入 Picture-in-Picture 模式
+          video.requestPictureInPicture()
+            .catch(function(error) {
+              console.error('Failed to enter Picture-in-Picture mode:', error);
+            });
+        }
+      });
+
+      // 監聽視頻進入或退出 Picture-in-Picture 模式的事件
+      video.addEventListener('enterpictureinpicture', function(event) {
+        console.log('Entered Picture-in-Picture mode');
+        pipButton.textContent = '退出 Picture-in-Picture';
+      });
+
+      video.addEventListener('leavepictureinpicture', function(event) {
+        console.log('Left Picture-in-Picture mode');
+        pipButton.textContent = '開啟 Picture-in-Picture';
+      });
+    } else {
+      console.error('Picture-in-Picture not supported in this browser');
+    }
+  </script>
+</body>
+</html>

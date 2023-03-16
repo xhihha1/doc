@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="sw" content="enabled">
+</head>
+
+<body>
+  <script>
+    // 檢查瀏覽器是否支援Notification API
+    if ('Notification' in window) {
+      // 請求用戶授權顯示通知
+      Notification.requestPermission().then(function (permission) {
+        // 如果用戶授權顯示通知
+        if (permission === 'granted') {
+          // 創建一個新的通知
+          var notification = new Notification('Hello, world!', {
+            body: 'This is a notification from my web app!',
+            icon: 'Shueisha.png'
+          });
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

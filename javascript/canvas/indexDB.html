@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+  <button id="add">Click</button>
+  <button id="getCount">getCount</button>
+  <button id="updateAutoIncrement">AutoIncrement</button>
+  <button id="updateUser">updateUser</button>
+  <button id="quotaUsage">quota usage</button>
+  <script>
+    // 開啟資料庫
+    var request = indexedDB.open("myDatabase", 1);
+
+    // 資料庫版本更新時，會執行這個函式
+    request.onupgradeneeded = function (event) {
+      console.log('onupgradeneeded')
+      var db = event.target.result;
+
+      // 創建 object store
+      var objectStore = db.createObjectStore("customers", {
+        keyPath: "id"
+      });
+
+      // 創建 index
+      objectStore.createIndex("name", "name", {
+        unique: false
+      });
+      objectStore.createIndex("email", "email", {
+        unique: true
+      });
+
+      // 建立初始資料
+      objectStore.add({
+        id: 1,
+        name: "John Doe",
+        email: "john.doe@example.com"
+      });
+      objectStore.add({
+        id: 2,
+        name: "Jane Smith",
+        email: "jane.smith@example.com"
+      });
+    };
+
+    // 開啟資料庫成功時，會執行這個函式
+    request.onsuccess = function (event) {
+      console.log('onsuccess')
+      var db = event.target.result;
+
+      // 取得 transaction 和 object store
+      var transaction = db.transaction(["customers"], "readwrite");
+      var objectStore = transaction.objectStore("customers");
+
+      // 新增資料
+      var customer = {
+        id: 3,
+        name: "Bob Johnson",
+        email: "bob.johnson@example.com"
+      };
+      var request = objectStore.add(customer);
+
+      // 讀取資料
+      var getRequest = objectStore.get(1);
+      getRequest.onsuccess = function (event) {
+        console.log(event.target.result);
+      };
+
+      // 更新資料
+      var updateRequest = objectStore.put({
+        id: 2,
+        name: "Jane Smith",
+        email: "jane.smith@example.com",
+        phone: "123-456-7890"
+      });
+
+      // 刪除資料
+      var deleteRequest = objectStore.delete(3);
+
+      // 完成 transaction
+      transaction.oncomplete = function (event) {
+        db.close();
+      };
+    };
+
+    // 定義 addUser 函數
+    function addUser(username) {
+      var request = indexedDB.open("myDatabase", 2); // 版本號升為 2
+
+      request.onupgradeneeded = function (event) {
+        var db = event.target.result;
+        var objectStore = db.createObjectStore("customers", {
+          autoIncrement: true,
+          keyPath: "id"
+        }); // 新增 autoIncrement 屬性
+        objectStore.createIndex("name", "name", {
+          unique: false
+        });
+        objectStore.createIndex("email", "email", {
+          unique: true
+        });
+      };
+
+      request.onsuccess = function (event) {
+        var db = event.target.result;
+        var transaction = db.transaction(["customers"], "readwrite");
+        var objectStore = transaction.objectStore("customers");
+
+        // 檢查是否已經存在該用戶
+        var getRequest = objectStore.index("name").get(username);
+        getRequest.onsuccess = function (event) {
+          var existingCustomer = event.target.result;
+
+          if (existingCustomer) {
+            console.log("User already exists:", existingCustomer);
+            return;
+          }
+
+          // 如果用戶不存在，則新增該用戶
+          var newCustomer = {
+            name: username
+          };
+
+          // 檢查是否已經有 address 欄位
+          var objectStoreRequest = objectStore.openCursor();
+          objectStoreRequest.onsuccess = function (event) {
+            var cursor = event.target.result;
+            if (cursor) {
+              if (!cursor.value.address) {
+                cursor.value.address = "N/A";
+                objectStore.put(cursor.value);
+              }
+              cursor.continue();
+            } else {
+              // 新增新用戶
+              objectStore.add(newCustomer);
+            }
+          };
+        };
+
+        transaction.oncomplete = function (event) {
+          db.close();
+        };
+      };
+    }
+
+    // 定義將 keyPath 更改為 autoIncrement 的函數
+    function updateKeyPathToAutoIncrement(objectStoreName) {
+      var request = indexedDB.open("myDatabase", 2); // 版本號升為 2
+
+      request.onupgradeneeded = function (event) {
+        var db = event.target.result;
+
+        // 創建新的物件存儲區，keyPath 設置為 autoIncrement
+        var newObjectStore = db.createObjectStore(objectStoreName + "_new", {
+          autoIncrement: true
+        });
+
+        // 從舊的物件存儲區中讀取所有現有的物件
+        var oldObjectStore = event.target.transaction.objectStore(objectStoreName);
+        var objectStoreRequest = oldObjectStore.openCursor();
+        objectStoreRequest.onsuccess = function (event) {
+          var cursor = event.target.result;
+          if (cursor) {
+            // 在新的物件存儲區中使用 put() 方法為每個物件創建一個新的項目，該項目的 key 將自動遞增
+            newObjectStore.put(cursor.value);
+            cursor.continue();
+          } else {
+            // 刪除舊的物件存儲區
+            db.deleteObjectStore(objectStoreName);
+
+            // 將新的物件存儲區重命名為舊的物件存儲區的名稱
+            const objectStore = db.createObjectStore(objectStoreName, {
+              autoIncrement: true,
+              keyPath: "id"
+            });
+            objectStore.createIndex("name", "name", {
+              unique: false
+            });
+            objectStore.createIndex("email", "email", {
+              unique: true
+            });
+            var renamedObjectStore = event.target.transaction.objectStore(objectStoreName);
+            var renamedObjectStoreRequest = newObjectStore.openCursor();
+            renamedObjectStoreRequest.onsuccess = function (event) {
+              console.log('event.target', event.target);
+              var cursor = event.target.result;
+              if (cursor) {
+                console.log('cursor.value', cursor.value);
+                renamedObjectStore.put(cursor.value);
+                cursor.continue();
+              }
+            };
+          }
+        };
+      };
+
+      request.onsuccess = function (event) {
+        event.target.result.close();
+      };
+    }
+
+    function getCustomersCount() {
+      var request = indexedDB.open("myDatabase");
+
+      request.onsuccess = function (event) {
+        var db = event.target.result;
+
+        var transaction = db.transaction(["customers"], "readonly");
+        var objectStore = transaction.objectStore("customers");
+
+        var countRequest = objectStore.count();
+        countRequest.onsuccess = function (event) {
+          var count = event.target.result;
+          console.log("Total number of customers:", count);
+          db.close(); // 關閉數據庫連接
+        };
+      };
+    }
+
+    function updateCustomer(email) {
+      var request = indexedDB.open("myDatabase");
+
+      request.onsuccess = function (event) {
+        var db = event.target.result;
+
+        var transaction = db.transaction(["customers"], "readwrite");
+        var objectStore = transaction.objectStore("customers");
+
+        var getRequest = objectStore.index("email").get(email);
+        // var getRequest = objectStore.get(1);
+        getRequest.onsuccess = function (event) {
+          var customer = event.target.result;
+          if (customer) {
+            customer.name = "jack";
+            objectStore.put(customer);
+            console.log("Customer with id 1 updated successfully!");
+          } else {
+            console.error("No customer found with id 1");
+          }
+          db.close(); // 關閉數據庫連接
+        };
+      };
+    }
+
+    async function quotaUsage() {
+      if (navigator.storage && navigator.storage.estimate) {
+        const quota = await navigator.storage.estimate();
+        // quota.usage -> 已用字节数。
+        // quota.quota -> 最大可用字节数。
+        const percentageUsed = (quota.usage / quota.quota) * 100;
+        console.log(`您已使用可用存储的 ${percentageUsed}%。`);
+        const remaining = quota.quota - quota.usage;
+        console.log(`您最多可以再写入 ${remaining} 个字节。`);
+      }
+    }
+
+    document.getElementById('add').onclick = function () {
+      addUser("Alice");
+    }
+    document.getElementById('updateAutoIncrement').onclick = function () {
+      // 測試將 keyPath 更改為 autoIncrement 的函數
+      updateKeyPathToAutoIncrement("customers");
+    }
+    document.getElementById('getCount').onclick = function () {
+      // 測試將 keyPath 更改為 autoIncrement 的函數
+      getCustomersCount();;
+    }
+    document.getElementById('updateUser').onclick = function () {
+      updateCustomer("john.doe@example.com");
+    }
+    document.getElementById('quotaUsage').onclick = function () {
+      quotaUsage();
+    }
+    
+  </script>
+</body>
+
+</html>

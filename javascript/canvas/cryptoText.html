@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Web Crypto API Example</title>
+</head>
+<body>
+  <button onclick="encryptData()">加密數據</button>
+  <script>
+    function encryptData() {
+      // 生成一個隨機的對稱加密密鑰
+      crypto.subtle.generateKey(
+        {
+          name: 'AES-GCM',
+          length: 256
+        },
+        true,
+        ['encrypt', 'decrypt']
+      )
+      .then(function(key) {
+        // 將要加密的數據轉換為Unit8Array類型
+        // const data = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const d = new Date();
+        // let text = d.toString();
+        let text = d.getTime();
+        console.log('input string:', text);
+        var enc = new TextEncoder(); // always utf-8
+        const data = enc.encode(text)
+
+        // 使用生成的密鑰對數據進行加密
+        crypto.subtle.encrypt(
+          {
+            name: 'AES-GCM',
+            iv: new Uint8Array(12)
+          },
+          key,
+          data
+        )
+        .then(function(encrypted) {
+          console.log('Encrypted data:', new Uint8Array(encrypted));
+
+          // 使用生成的密鑰對加密後的數據進行解密
+          crypto.subtle.decrypt(
+            {
+              name: 'AES-GCM',
+              iv: new Uint8Array(12)
+            },
+            key,
+            encrypted
+          )
+          .then(function(decrypted) {
+            console.log('Decrypted data:', new Uint8Array(decrypted));
+            var enc = new TextDecoder("utf-8");
+            console.log('output string: ', enc.decode(new Uint8Array(decrypted)));
+            console.log('-- end --', new Date().getTime())
+          })
+          .catch(function(error) {
+            console.error('Error decrypting data:', error);
+          });
+        })
+        .catch(function(error) {
+          console.error('Error encrypting data:', error);
+        });
+      })
+      .catch(function(error) {
+        console.error('Error generating key:', error);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Media Session API Example</title>
+</head>
+<body>
+  <!-- <audio id="myAudio" controls src="audio.mp3"></audio> -->
+  <audio id="myAudio" controls src="https://storage.googleapis.com/media-session/elephants-dream/the-wires.mp3"></audio>
+  <script>
+    const audio = document.getElementById('myAudio');
+
+    // 檢查瀏覽器是否支持 Media Session API
+    if ('mediaSession' in navigator) {
+        console.log('mediaSession')
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: 'My Audio',
+        artist: 'Me',
+        album: 'My Album',
+        artwork: [
+          { src: './notification_serviceWorker/Shueisha.png', sizes: '96x96', type: 'image/png' },
+          { src: './notification_serviceWorker/Shueisha.png', sizes: '128x128', type: 'image/png' },
+          { src: './notification_serviceWorker/Shueisha.png', sizes: '192x192', type: 'image/png' },
+          { src: './notification_serviceWorker/Shueisha.png', sizes: '256x256', type: 'image/png' },
+          { src: './notification_serviceWorker/Shueisha.png', sizes: '384x384', type: 'image/png' },
+          { src: './notification_serviceWorker/Shueisha.png', sizes: '512x512', type: 'image/png' },
+        ]
+      });
+
+      // 定義媒體控制介面上的自訂動作
+      navigator.mediaSession.setActionHandler('play', function() {
+        console.log('play')
+        audio.play();
+      });
+
+      navigator.mediaSession.setActionHandler('pause', function() {
+        audio.pause();
+      });
+
+      navigator.mediaSession.setActionHandler('seekbackward', function() {
+        audio.currentTime -= 10;
+      });
+
+      navigator.mediaSession.setActionHandler('seekforward', function() {
+        audio.currentTime += 10;
+      });
+    } else {
+      console.error('Media Session API not supported in this browser');
+    }
+  </script>
+</body>
+</html>

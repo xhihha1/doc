@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <canvas width="500" height="500"></canvas>
+  <hr/>
+  <script>
+    function copyImageData (ctx) {
+      const imgData = ctx.getImageData(0, 0, 500, 500);
+      let tmp = document.getElementById('tempCanvas')
+      if(!tmp) {
+        tmp=document.createElement("canvas");
+        tmp.id = 'tempCanvas';
+      }
+        tmp.width=500;
+        tmp.height=500;
+        var ctx2=tmp.getContext("2d");
+        ctx2.putImageData(imgData,0,0);
+        return tmp;
+    }
+    function redrawImage (ctx, imgTemp) {
+      ctx.globalCompositeOperation='destination-over';
+      ctx.drawImage(imgTemp, 0, 0);
+      ctx.globalCompositeOperation='source-over';
+    }
+    const canvas = document.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+    let imgTemp = copyImageData(ctx);
+
+    ctx.fillStyle='blue';
+    ctx.fillRect(10,10,50,50);
+    ctx.save(); 
+    ctx.globalCompositeOperation='source-over';
+    ctx.beginPath();
+    ctx.fillStyle='red';
+    ctx.arc(50,50,30,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+    redrawImage(ctx, imgTemp);
+
+    imgTemp = copyImageData(ctx);
+    ctx.fillStyle='blue';
+    ctx.fillRect(110,10,50,50);
+    ctx.save(); 
+    ctx.globalCompositeOperation='source-atop';
+    ctx.beginPath();
+    ctx.fillStyle='red';
+    ctx.arc(150,50,30,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+    redrawImage(ctx, imgTemp);
+
+    imgTemp = copyImageData(ctx);
+    ctx.fillStyle='blue';
+    ctx.fillRect(210,10,50,50);
+    ctx.save(); 
+    ctx.globalCompositeOperation='source-in';
+    ctx.beginPath();
+    ctx.fillStyle='red';
+    ctx.arc(250,50,30,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+    redrawImage(ctx, imgTemp);
+
+    imgTemp = copyImageData(ctx);
+    ctx.fillStyle='blue';
+    ctx.fillRect(310,10,50,50);
+    ctx.save(); 
+    ctx.globalCompositeOperation='source-out';
+    ctx.beginPath();
+    ctx.fillStyle='red';
+    ctx.arc(350,50,30,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+    redrawImage(ctx, imgTemp);
+
+    imgTemp = copyImageData(ctx);
+    ctx.fillStyle='blue';
+    ctx.fillRect(410,10,50,50);
+    ctx.save(); 
+    ctx.globalCompositeOperation='destination-over';
+    ctx.beginPath();
+    ctx.fillStyle='red';
+    ctx.arc(450,50,30,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+    redrawImage(ctx, imgTemp);
+    // ----------------------------------------------
+    imgTemp = copyImageData(ctx);
+    ctx.fillStyle='blue';
+    ctx.fillRect(10,110,50,50);
+    ctx.save();
+    ctx.globalCompositeOperation='destination-atop';
+    ctx.beginPath();
+    ctx.fillStyle='red';
+    ctx.arc(50,150,30,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+    redrawImage(ctx, imgTemp);
+
+    imgTemp = copyImageData(ctx);
+    ctx.fillStyle='blue';
+    ctx.fillRect(110,110,50,50);
+    ctx.save(); 
+    ctx.globalCompositeOperation='destination-in';
+    ctx.beginPath();
+    ctx.fillStyle='red';
+    ctx.arc(150,150,30,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+    redrawImage(ctx, imgTemp);
+
+    imgTemp = copyImageData(ctx);
+    ctx.fillStyle='blue';
+    ctx.fillRect(210,110,50,50);
+    ctx.save(); 
+    ctx.globalCompositeOperation='destination-out';
+    ctx.beginPath();
+    ctx.fillStyle='red';
+    ctx.arc(250,150,30,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+    redrawImage(ctx, imgTemp);
+
+    imgTemp = copyImageData(ctx);
+    ctx.fillStyle='blue';
+    ctx.fillRect(310,110,50,50);
+    ctx.save(); 
+    ctx.globalCompositeOperation='lighter';
+    ctx.beginPath();
+    ctx.fillStyle='red';
+    ctx.arc(350,150,30,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+    redrawImage(ctx, imgTemp);
+
+    imgTemp = copyImageData(ctx);
+    ctx.fillStyle='blue';
+    ctx.fillRect(410,110,50,50);
+    ctx.save(); 
+    ctx.globalCompositeOperation='copy';
+    ctx.beginPath();
+    ctx.fillStyle='red';
+    ctx.arc(450,150,30,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+    redrawImage(ctx, imgTemp);
+
+    imgTemp = copyImageData(ctx);
+    ctx.fillStyle='blue';
+    ctx.fillRect(10,210,50,50);
+    ctx.save();
+    ctx.globalCompositeOperation='xor';
+    ctx.beginPath();
+    ctx.fillStyle='red';
+    ctx.arc(50,250,30,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+    redrawImage(ctx, imgTemp);
+
+    function drawInDiv () {
+      var gco = new Array();
+      gco.push("source-atop");
+      gco.push("source-in");
+      gco.push("source-out");
+      gco.push("source-over");
+      gco.push("destination-atop");
+      gco.push("destination-in");
+      gco.push("destination-out");
+      gco.push("destination-over");
+      gco.push("lighter");
+      gco.push("copy");
+      gco.push("xor");
+
+      var n;
+      for (n = 0; n < gco.length; n++) {
+        document.write("<div id='p_" + n + "' style='display:inline-block;'>" + gco[n] + ":<br>");
+        var c = document.createElement("canvas");
+        c.width = 120;
+        c.height = 100;
+        document.getElementById("p_" + n).appendChild(c);
+        var ctx = c.getContext("2d");    
+        ctx.fillStyle = "blue";
+        ctx.fillRect(10, 10, 50, 50);
+        ctx.globalCompositeOperation = gco[n];
+        ctx.beginPath();
+        ctx.fillStyle = "red";
+        ctx.arc(50, 50, 30, 0, 2 * Math.PI);
+        ctx.fill();
+        document.write("</div>");
+      }
+    }
+    drawInDiv()
+  </script>
+</body>
+
+</html>
