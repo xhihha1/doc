@@ -105,7 +105,7 @@ class MyButton extends HTMLElement {
           border-radius: 4px;
         }
       </style>
-      <button>${label}</button>
+      <button>${label}<slot></slot></button>
     `;
     this.shadowRoot.querySelector('button').addEventListener('click', this.onClick.bind(this));
   }
