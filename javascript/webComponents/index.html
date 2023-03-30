@@ -1,0 +1,42 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Components Example</title>
+  <script src="./my-button.js"></script>
+</head>
+<body>
+    <my-button label="Click Me!" onclick="buttonClicked()"></my-button>
+    <script>
+      function buttonClicked() {
+        console.log('Button clicked!');
+      }
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Web Components Example</title>
+    <script src="./my-button.js"></script>
+  </head>
+  <body>
+    <my-button label="Click Me!" event="button-click"></my-button>
+    <my-button label="Say Hello!" event="say-hello"></my-button>
+
+    <script>
+      const buttons = document.querySelectorAll('my-button');
+      buttons.forEach(button => {
+        button.addEventListener('button-click', () => {
+          console.log('Button clicked!');
+        });
+
+        button.addEventListener('say-hello', () => {
+          console.log('Hello!');
+        });
+      });
+    </script>
+  </body>
+</html>
