@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="sw" content="enabled">
+</head>
+
+<body>
+    <div id="msg"></div>
+    <button id="getData">Data</button>
+    <button id="getDataXML">DataXML</button>
+    <button id="getCss">css</button>
+    <script>
+        // 注冊Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(function (registration) {
+                    console.log('Service Worker 注冊成功：', registration.scope);
+                    document.getElementById('msg').innerHTML = 'Success'
+                    document.getElementById('msg').style.color = 'Green'
+                })
+                .catch(function (error) {
+                    console.log('Service Worker 注冊失敗：', error);
+                    document.getElementById('msg').innerHTML = 'Fail'
+                    document.getElementById('msg').style.color = 'Red'
+                });
+        }
+        document.getElementById('getData').onclick = function () {
+            // window.location.href = 'home.html'
+            // 發送對home.html頁面的請求
+            fetch('/api/data')
+                .then(function (response) {
+                    console.log('Response received', response);
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+        }
+
+        document.getElementById('getDataXML').onclick = function () {
+            function reqListener() {
+                console.log(this.responseText);
+            }
+
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", reqListener);
+            oReq.open("GET", "/api/data");
+            oReq.send();
+        }
+
+        document.getElementById('getCss').onclick = function () {
+            // window.location.href = 'home.html'
+            // 發送對home.html頁面的請求
+            fetch('s.css')
+                .then(function (response) {
+                    console.log('Response received', response);
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+
+</html>

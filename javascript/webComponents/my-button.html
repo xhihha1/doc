@@ -1,0 +1,103 @@
+<!-- <template id="my-button-template">
+    <style>
+      button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+    </style>
+    <button></button>
+  </template>
+  
+  <script>
+    class MyButton extends HTMLElement {
+      constructor() {
+        super();
+  
+        const template = document.querySelector('#my-button-template');
+        const clone = template.content.cloneNode(true);
+  
+        this._button = clone.querySelector('button');
+  
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(clone);
+  
+        this._button.addEventListener('click', () => {
+          const event = new CustomEvent('myButtonClick', {
+            bubbles: true,
+            composed: true
+          });
+          this.dispatchEvent(event);
+        });
+      }
+  
+      get label() {
+        return this.getAttribute('label');
+      }
+  
+      set label(value) {
+        this.setAttribute('label', value);
+      }
+  
+      static get observedAttributes() {
+        return ['label'];
+      }
+  
+      attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'label' && oldValue !== newValue) {
+          this._button.textContent = newValue;
+        }
+      }
+    }
+  
+    customElements.define('my-button', MyButton);
+  </script> -->
+  <dom-module id="my-component">
+    <template>
+      <style>
+        h2 {
+          color: red;
+        }
+      </style>
+      <h2>Hello from my component!</h2>
+    </template>
+    <script>
+      class MyComponent extends HTMLElement {
+        connectedCallback() {
+          console.log('My component connected');
+        }
+      }
+      customElements.define('my-component', MyComponent);
+    </script>
+  </dom-module>
+  <!-- <template id="my-component-template">
+    <style>
+      h2 {
+        color: red;
+      }
+    </style>
+    <h2>Hello from my component!</h2>
+  </template>
+  
+  <script>
+    class MyComponent extends HTMLElement {
+      constructor() {
+        super();
+        const template = document.getElementById('my-component-template');
+        const templateContent = template.content;
+  
+        const shadowRoot = this.attachShadow({mode: 'open'}).appendChild(
+          templateContent.cloneNode(true)
+        );
+      }
+    }
+  
+    customElements.define('my-component', MyComponent);
+  </script> -->

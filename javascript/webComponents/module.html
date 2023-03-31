@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Web Components Example</title>
+  <!-- <script src="./my-button.js"></script> -->
+  <script type="module">
+    import MyButton from './my-button-module-close.js';
+    console.log(MyButton)
+    if(!customElements.get('my-button')){
+      customElements.define('my-button', MyButton);
+    }
+  </script>
+</head>
+
+<body>
+  <my-button label="Click Me!" event="button-click" id="A"></my-button>
+  <my-button label="Say Hello!" event="say-hello"></my-button>
+  <my-button label="Click me a!" event="my-event">
+    <span>Additional content</span>
+  </my-button>
+  <div></div>
+  <script>
+    
+    const buttons = document.querySelectorAll('my-button');
+    buttons.forEach(button => {
+      button.addEventListener('button-click', () => {
+        console.log('Button clicked!');
+      });
+
+      button.addEventListener('say-hello', () => {
+        console.log('Hello!');
+      });
+    });
+    console.log('a')
+    const newBtn = document.createElement('my-button');
+    newBtn.label = 'Dynamic add';
+    document.querySelector('div').appendChild(newBtn)
+    newBtn.label = 'Dynamic adds';
+  </script>
+</body>
+
+</html>
