@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.24.0/axios.min.js"></script>
+</head>
+
+<body>
+    <input type="file" multiple="multiple" id="fileInput" />
+    <button onclick="SliceUpload()">上传</button>
+    <script>
+        function SliceUpload() {
+            const file = document.getElementById('fileInput').files[0]
+            if (!file) return
+
+            // 文件分片
+            let size = 1024 * 50; // 分片大小设置
+            let fileChunks = [];
+            let index = 0;        // 分片序号
+            for (let cur = 0; cur < file.size; cur += size) {
+                fileChunks.push({
+                    hash: index++,
+                    chunk: file.slice(cur, cur + size),
+                });
+            }
+
+            const uploadFileChunks = async function (list) {
+                if (list.length === 0) {
+                    // 所有分片上传完成，通知如无
+                    await axios({
+                        method: 'get',
+                        url: '/merge',
+                        params: {
+                            filename: file.name
+                        }
+                    });
+                    console.log('Upload to complete')
+                    return
+                }
+
+                let pool = []       // 并发池
+                let max = 3         // 最大并发数
+                let finish = 0      // 完成数量
+                let failList = []   // 失败列表
+                for (let i = 0; i < list.length; i++) {
+                    let item = list[i]
+                    let formData = new FormData()
+                    formData.append('filename', file.name)
+                    formData.append('hash', item.hash)
+                    formData.append('chunk', item.chunk)
+
+                    let task = axios({
+                        method: 'post',
+                        url: '/upload',
+                        data: formData
+                    })
+
+                    task.then((data) => {
+                        // 从并发池中移除已经完成的请求
+                        let index = pool.findIndex(t => t === task)
+                        pool.splice(index)
+                    }).catch(() => {
+                        failList.push(item)
+                    }).finally(() => {
+                        finish++
+                        // 如果有失败的重新上传
+                        if (finish === list.length) {
+                            uploadFileChunks(failList)
+                        }
+                    })
+                    pool.push(task)
+                    if (pool.length === max) {
+                        await Promise.race(pool)
+                    }
+                }
+            }
+
+            uploadFileChunks(fileChunks)
+        }
+    </script>
+</body>
+
+</html>
