@@ -31,6 +31,10 @@ Linux 子系統搞爛了要怎麼辦？微軟有提供「lxrun」這個指令，
 [Windows下安装Ubuntu子系统的目录位置](https://blog.csdn.net/weixin_44623594/article/details/106419008)  
 [在 Windows 10 上運行 Ubuntu Linux 子系統並將系統移動至其他硬碟](https://medium.com/@chenwy0806/%E5%9C%A8-windows-10-%E4%B8%8A%E9%81%8B%E8%A1%8C-ubuntu-linux-%E5%AD%90%E7%B3%BB%E7%B5%B1%E4%B8%A6%E5%B0%87%E7%B3%BB%E7%B5%B1%E7%A7%BB%E5%8B%95%E8%87%B3%E5%85%B6%E4%BB%96%E7%A1%AC%E7%A2%9F-57e8faaa3e04)  
 
+## 3. 讀取 windows 內容  
+
+	`/mnt/c/Windows`
+
 
 # 錯誤處理  
 
