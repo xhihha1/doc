@@ -63,7 +63,7 @@
     kubectl expose pod my-pod --type=NodePort --name=my-pod-service
     kubectl expose pod <pod> --port=<port> --name=<service-name>
 
-# 使用 minikube 映射 url  
+# 使用 minikube 映射 url (讓外部服務能使用url連到)  
     
     minikube service my-pod-service --url
     minikube service --all
