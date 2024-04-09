@@ -146,3 +146,58 @@
     kubectl apply -f myfile.yaml 
 
 
+## 使用 secret  
+
+假設secret 名稱：`my-database-secret`  
+
+      kubectl create secret <secret_type> <secret_name> <data>
+      kubectl create secret generic my-database-secret --from-literal=username=myuser --from-literal=password=mypassword
+
+
+在这个示例中，我们将 Secret my-database-secret 挂载到 Pod 中的 /etc/secret 目录下。  
+
+- 通过 Volume 挂载 Secret 到 Pod：  
+
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: my-pod
+      spec:
+        containers:
+          - name: my-container
+            image: my-image
+            volumeMounts:
+              - name: secret-volume
+                mountPath: /etc/secret
+        volumes:
+          - name: secret-volume
+            secret:
+              secretName: my-database-secret
+
+- 通过环境变量注入 Secret 到 Pod：  
+
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: my-pod
+      spec:
+        containers:
+          - name: my-container
+            image: my-image
+            env:
+              - name: DB_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: my-database-secret
+                    key: username
+              - name: DB_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: my-database-secret
+                    key: password
+
+## 讀取 secret  
+
+      kubectl get secret <secret_name>
+      kubectl get secret <secret_name> -o yaml
+      kubectl get secret my-database-secret -o yaml  
