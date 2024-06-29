@@ -121,8 +121,17 @@
   - 重啟程式  
   - 到 `AI Image Generation`的設定，可能需要`upgrade`  
 
+# Lora models
+
+`D:\Git\krita_ai_local_server\krita\ai_diffusion\server\ComfyUI\models\loras`
+
 # reference  
 
-[https://www.patreon.com/posts/krita-ai-hui-tu-94125522](https://www.patreon.com/posts/krita-ai-hui-tu-94125522)
-[[AI tutorial] 免費繪圖軟體 Krita 如何用 AI 產圖及即時繪圖](https://www.youtube.com/watch?v=ttXF9HPcvRw)
-[[AI tutorial] 免費繪圖軟體 Krita 的 AI 產圖擴充程式更新、使用 LoRA與即時繪製擬真圖片](https://www.youtube.com/watch?v=xVIZ6nucJxA)
+[https://www.patreon.com/posts/krita-ai-hui-tu-94125522](https://www.patreon.com/posts/krita-ai-hui-tu-94125522)  
+[[AI tutorial] 免費繪圖軟體 Krita 如何用 AI 產圖及即時繪圖](https://www.youtube.com/watch?v=ttXF9HPcvRw)  
+[[AI tutorial] 免費繪圖軟體 Krita 的 AI 產圖擴充程式更新、使用 LoRA與即時繪製擬真圖片](https://www.youtube.com/watch?v=xVIZ6nucJxA)  
+[[AI 繪圖教學] 美女換衣服進階版](https://www.youtube.com/watch?v=2t98wwBKxfc)  
+
+
+[Krita AI, Constant faces using Lora Models](https://www.youtube.com/watch?v=YCQvqIumRd8)  
+[Kohya ss HOW to Make a Model of a face to use in Easy Diffusion/Stable Diffusion](https://www.youtube.com/watch?v=yB3_pW1Ev0I)
