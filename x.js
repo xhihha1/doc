@@ -301,5 +301,3 @@ const main = {
       loadFailed: 'Load preference failed, use default setting'
     }
   }
-
-  
