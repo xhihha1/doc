@@ -30,3 +30,13 @@ Agent Studio
         docker run --name ollama -v ollama:/root/.ollama -p 11434:11434 ollama/ollama
 
         docker exec -it ollama ollama run llama3:8b
+
+# chat ollama    
+
+[chat ollama](https://github.com/sugarforever/chat-ollama)  
+
+[youtube](https://www.youtube.com/watch?v=x4qPdrgVb_Y)  
+
+# Vector DB
+
+[Chroma](https://docs.trychroma.com/getting-started)

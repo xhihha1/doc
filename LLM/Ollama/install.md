@@ -55,3 +55,8 @@ ex: use model **mistral**
 
 
 [透過-ollama-在本地運行](https://medium.com/@liyiyuian/%E9%80%8F%E9%81%8E-ollama-%E5%9C%A8%E6%9C%AC%E5%9C%B0%E9%81%8B%E8%A1%8C-llm-60e0081ebdca)
+
+
+# Ollama embedding-models  
+
+    https://ollama.com/blog/embedding-models

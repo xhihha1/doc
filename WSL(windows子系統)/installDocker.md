@@ -16,7 +16,7 @@
 可能會有安裝多個分發版
 
 		NAME                   STATE           VERSION
-		* Ubuntu                 Running         2
+		* Ubuntu               Running         2
 		Debian                 Stopped         2
 		Kali-linux             Stopped         2
 		openSUSE-42            Stopped         2
