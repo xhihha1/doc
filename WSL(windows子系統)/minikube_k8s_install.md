@@ -54,12 +54,20 @@ or
 
 # Deploy applications(minikube)   
 
+创建部署：  
+
     kubectl create deployment hello-minikube --image=kicbase/echo-server:1.0
+
+暴露服务：  
+
     kubectl expose deployment hello-minikube --type=NodePort --port=8080
+
+访问服务：  
 
     minikube service hello-minikube
 
 Alternatively, use kubectl to forward the port:
+端口转发（可选）：  
 
     kubectl port-forward service/hello-minikube 7080:8080
 

@@ -22,6 +22,10 @@
 
 	deactivate  
 
+# Linux / macOS  
+
+	source ./bin/activate  
+
 ## 在 env 環境安裝 pyinstaller  
 
 	pip installer pyinstaller  
