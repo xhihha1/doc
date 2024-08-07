@@ -31,3 +31,11 @@ netstat -tuln | grep 80
 exit
 
 ```
+
+# 防火墙设置:
+
+    sudo iptables -L -n
+
+添加规则，可以执行以下命令：  
+
+    sudo iptables -A INPUT -p tcp --dport 5000 -j ACCEPT
