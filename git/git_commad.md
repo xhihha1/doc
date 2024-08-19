@@ -39,5 +39,6 @@
 `git tag <tag_name>`：为当前提交打上标签。  
 `git push origin <tag_name>`：将标签推送到远程仓库。  
 `git tag -d <tag_name>`：删除本地标签。  
+`git fetch --tags`：更新標籤。  
 
 `q`：離開操作。  
