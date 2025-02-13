@@ -1,5 +1,18 @@
 
 
+| 工具 |	主要用途 |	是否管理 Python 版本 |	是否管理虛擬環境 |	適用場景 |
+|  -------------  | ----                        | ------------  | ----  | ----  |
+|virtualenv       |	虛擬環境管理                 |	❌ 否        |	✅ 是                           |	傳統 Python 環境管理，適合簡單的隔離專案依賴|
+|pyenv            |	Python 版本管理              |	✅ 是       |	❌ 否（需搭配 pyenv-virtualenv） |	多 Python 版本切換，如 2.x、3.x、pypy|
+|pyenv-virtualenv |	Python 版本 + 虛擬環境管理    |	✅ 是        |	✅ 是                            |	pyenv 的擴充，提供 virtualenv 功能|
+|venv（內建）      |	標準虛擬環境管理           | ❌ 否        |	✅ 是                            |	Python 內建，適合輕量級應用|
+|poetry           |	依賴 + 虛擬環境管理           |	✅ 是（間接） |	✅ 是                            |	現代 Python 開發，推薦用於新專案|
+
+
+
+
+
+
 https://www.jianshu.com/p/f482a9fcae0e
 
 windows pyenv  

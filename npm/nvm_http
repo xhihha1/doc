@@ -1,0 +1,20 @@
+can export the non https version of the mirror it uses to grab the stuff:  
+
+```bash   
+export NVM_NODEJS_ORG_MIRROR=http://nodejs.org/dist   
+```  
+
+Changing from  
+```bash  
+export NVM_NODEJS_ORG_MIRROR=http://nodejs.org/dist
+```  
+To  
+```bash  
+export NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist
+```  
+
+# 1. Use a Legacy OpenSSL Flag  
+
+```bash   
+export NODE_OPTIONS=--openssl-legacy-provider
+```   
