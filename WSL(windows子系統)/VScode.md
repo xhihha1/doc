@@ -1,5 +1,7 @@
 # 使用 VScode 連線到 WSL 進行開發  
 
+![](./vscode.png)
+
 1. 在 VScode 安裝套件 `WSL`  
 2. 點擊VScode左下角藍色連線按鈕  
 3. 選擇 "Connect to WSL using Distro"  
