@@ -107,6 +107,11 @@ Poetry 會自動建立 .venv/ 目錄並安裝所有依賴。
 eval $(poetry env activate)  
 ```
 
+```powershell
+Invoke-Expression (poetry env activate)
+```
+
+
 ```sh
 poetry shell  # 進入虛擬環境
 # Looking for poetry shell? It was moved to a plugin: poetry-plugin-shell

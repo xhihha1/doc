@@ -6,7 +6,24 @@
 
 Ollama is an open source library that provides easy access to large language models.  
 
-    curl https://ollama.ai/install.sh | sh
+```
+    # curl https://ollama.ai/install.sh | sh
+    curl -fsSL https://ollama.com/install.sh | sh
+```
+
+手動下載安裝  
+```
+curl -L https://ollama.com/download/ollama-linux-amd64.tgz -o ollama-linux-amd64.tgz
+sudo tar -C /usr -xzf ollama-linux-amd64.tgz
+```
+Start Ollama:  
+```
+ollama serve
+```
+In another terminal, verify that Ollama is running:
+```
+ollama -v
+```
 
 The Ollama API is now available at 127.0.0.1:11434  
 
@@ -32,6 +49,15 @@ ex: use model **mistral**
     ollama cp <model_name_1> <model_name_2>能複製模型，用來客製化不同的提詞 (prompts) 及不同的溫度 (temperature)。  
 
 可以試著運行比較小的模型，例如 **orca-mini**   
+
+
+# 下載模型  
+
+```
+ollama pull gemma:2b
+ollama pull phi
+```
+
 
 # Run  
 

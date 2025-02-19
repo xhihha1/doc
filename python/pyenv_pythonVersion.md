@@ -93,6 +93,18 @@ global & local & shell 三者使用方法差異在於：
     python3 -m pip --version  
     python3 -m pip install requests  
 
+## pyenv 切換到 Python 3.10.5 版本並建立 virtualenv 環境  
+
+    pyenv install 3.10.5  
+    pyenv global 3.10.5  
+    python3 -m venv <myenv>  
+
+啟用虛擬環境
+
+    myenv\Scripts\activate
+    python --version
+
+
 
 # pyenv exec 執行環境下的 python, pip  
 

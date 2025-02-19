@@ -48,8 +48,13 @@
 
 For simple version:
 
+	sudo apt-get update
 	sudo apt-get install docker.io docker-compose -y
 	sudo usermod -aG docker $USER
+	newgrp docker
+
+**sudo usermod -aG docker $USER**: 新增當前使用者到 Docker 群組   
+**newgrp docker**: 生效變更 加入群組後，必須重新登入才會生效  
 
 ## Running the Docker Daemon:  
 

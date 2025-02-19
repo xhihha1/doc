@@ -22,3 +22,33 @@
 
 ![GUI](./GUI.png)  
 
+# 條列  
+
+        wsl --list --verbose
+        wsl -l -v
+
+# 使用  
+
+        wsl -d <發行版名稱>
+        wsl -d Ubuntu-22.04
+        wsl --distribution Ubuntu-22.04
+
+## 使用預設發行版  
+
+        wsl
+
+更改預設發行版
+
+        wsl --set-default <發行版名稱>
+        wsl --set-default Ubuntu-22.04
+
+
+# 先停止指定的 WSL 發行版  
+
+        wsl --terminate <發行版名稱>
+        wsl --terminate Ubuntu-22.04
+
+# 刪除
+
+        wsl --unregister <發行版名稱>
+        wsl --unregister Ubuntu-22.04
