@@ -101,7 +101,7 @@ global & local & shell 三者使用方法差異在於：
 
 啟用虛擬環境
 
-    myenv\Scripts\activate
+    <myenv>\Scripts\activate
     python --version
 
 

@@ -1,0 +1,8 @@
+psycopg2
+psycopg2-binary
+sentence-transformers
+pgvector
+pyyaml
+faiss-cpu
+langchain
+ollama
