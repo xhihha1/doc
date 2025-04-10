@@ -11,6 +11,10 @@ To install the latest minikube stable release on x86-64 Linux using binary downl
 
     minikube start
 
+使用 Docker 作為驅動程式啟動 Minikube：  
+
+    minikube start --driver=docker
+
 # kubectl install  
 
 [https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
