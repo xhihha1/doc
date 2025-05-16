@@ -23,7 +23,12 @@
 
 進入到`firstProj`目錄下，執行  
 
+```bash  
     go mod init
+    
+    go mod init <module_name>
+    go mod init firstProj
+```
 
 生成 `go.mod`  
 
