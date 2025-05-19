@@ -38,6 +38,12 @@ docker run -d --name iotdb-service \
 docker exec -ti iotdb-service /iotdb/sbin/start-cli.sh -h iotdb-service
 ```
 
+### configuration  
+
+cn+: [Config Node Configuration](https://iotdb.apache.org/UserGuide/V1.3.x/Reference/ConfigNode-Config-Manual.html#seedconfignode)
+
+dn_: [DataNode Configuration](https://iotdb.apache.org/UserGuide/V1.3.x/Deployment-and-Maintenance/Stand-Alone-Deployment_apache.html#_2%E3%80%81parameter-configuration)
+
 # C# Native API  
 
 [C# API](https://iotdb.apache.org/UserGuide/V1.3.x/API/Programming-CSharp-Native-API.html#scheam-api)  
@@ -107,6 +113,11 @@ await session_pool.DeleteDataAsync(delDev, 0, 5);
 // Close Session
 await session_pool.Close();
 
+```
+## 步驟 4：運行   
+
+```bash  
+dotnet run
 ```
 
 # 執行 IoTDB CLI  
