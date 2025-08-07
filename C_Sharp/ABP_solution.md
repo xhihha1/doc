@@ -72,22 +72,27 @@ Done.
 cd ../AbpSolution1.Web
 dotnet run
 ```  
+
+```bash
+abp install-libs
+```
+
 執行後會顯示下面的資訊  
 ```bash  
 [11:19:06 INF] Initialized all ABP modules.
 [11:19:06 INF] Initializing UI Database
 [11:19:07 INF] Saving healthchecks configuration to database
-[11:19:07 INF] Now listening on: https://localhost:44373
+[11:19:07 INF] Now listening on: http://0.0.0.0:44373
 [11:19:07 DBG] Executing HealthCheck collector HostedService.
-[11:19:07 INF] Start processing HTTP request GET https://localhost:44373/health-status
-[11:19:07 INF] Sending HTTP request GET https://localhost:44373/health-status
+[11:19:07 INF] Start processing HTTP request GET http://0.0.0.0:44373/health-status
+[11:19:07 INF] Sending HTTP request GET http://0.0.0.0:44373/health-status
 [11:19:07 INF] Application started. Press Ctrl+C to shut down.
 [11:19:07 INF] Hosting environment: Development
 [11:19:07 INF] Content root path: D:\EBO\ABP\AbpSolution1\AbpSolution1\src\AbpSolution1.Web
-[11:19:07 INF] Request starting HTTP/1.1 GET https://localhost:44373/health-status - null null
+[11:19:07 INF] Request starting HTTP/1.1 GET http://0.0.0.0:44373/health-status - null null
 ```  
 
-然後在瀏覽器中輸入 `https://localhost:44373/`，即可看到 ABP 的歡迎頁面。
+然後在瀏覽器中輸入 `http://0.0.0.0:44373/`，即可看到 ABP 的歡迎頁面。
 
 
 
@@ -184,6 +189,15 @@ namespace AbpSolution1.Books
 ```
 
 3. 第 3 步：建立 BookAppService 實作
+
+在  Application 專案下的 `csproj` 加入  
+
+```xml
+<ItemGroup>
+    <ProjectReference Include="..\AbpSolution1.Domain\AbpSolution1.Domain.csproj" />
+    <ProjectReference Include="..\AbpSolution1.Application.Contracts\AbpSolution1.Application.Contracts.csproj" />
+  </ItemGroup>
+```
 
 **src/AbpSolution1.Application/Books/BookAppService.cs**  
 
@@ -317,7 +331,7 @@ abp add-package Volo.Abp.Swashbuckle
 dotnet run
 ```
 
-在瀏覽器中輸入 `https://localhost:44373/swagger/index.html`，即可看到 Swagger UI。  
+在瀏覽器中輸入 `http://0.0.0.0:44373/swagger/index.html`，即可看到 Swagger UI。  
 
 
 -------------
