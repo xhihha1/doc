@@ -1,0 +1,8 @@
+{
+  "require": ["test/config/setup.js"],
+  "timeout": 10000,
+  "extension": ["js"],
+  "spec": ["test/flow-org.test.js"],
+  "reporter": "spec",
+  "exit": true
+}

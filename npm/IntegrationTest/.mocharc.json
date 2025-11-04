@@ -1,0 +1,11 @@
+{
+  "require": [
+    "test/config/setup.js"
+  ],
+  "timeout": 10000,
+  "recursive": true,
+  "extension": ["js"],
+  "spec": "test/**/*.test.js",
+  "reporter": "spec",
+  "exit": true
+}

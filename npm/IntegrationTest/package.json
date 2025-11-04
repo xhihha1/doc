@@ -1,0 +1,25 @@
+{
+  "name": "edgesync-integration-test",
+  "version": "1.0.0",
+  "description": "Integration tests for WEDA",
+  "scripts": {
+    "test": "mocha index.js",
+    "test:auth": "mocha --config .mocharc.auth.json",
+    "test:org": "mocha --config .mocharc.org.json",
+    "test:device": "mocha --config .mocharc.device.json",
+    "test:data": "mocha test/flow-data.test.js"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.10.0 <23.0.0",
+    "npm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "chai": "^5.1.1",
+    "mocha": "^10.7.3",
+    "supertest": "^7.0.0"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  }
+}
